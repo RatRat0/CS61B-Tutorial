@@ -1,5 +1,5 @@
 public class Planet {
-    static final double G = 6.67 * 0.00000000001;
+    private static final double G = 6.67 * 0.00000000001;
 
     public double xxPos;
     public double yyPos;
