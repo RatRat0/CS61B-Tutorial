@@ -1,9 +1,9 @@
 public class ArrayDeque<T> {
-    int size;
-    int totalSize;
-    int nextFirst;
-    int nextLast;
-    T[] items;
+    private int size;
+    private int totalSize;
+    private int nextFirst;
+    private int nextLast;
+    private T[] items;
 
     public ArrayDeque() {
         size = 0;
@@ -16,8 +16,8 @@ public class ArrayDeque<T> {
     public void addFirst(T item) {
         size++;
         items[nextFirst] = item;
-        nextFirst = (nextFirst - 1) % totalSize;
-        if (size == totalSize) {
+        nextFirst = (nextFirst - 1 + totalSize) % totalSize;
+        if (size == totalSize - 1) {
             this.extendDouble();
         }
     }
@@ -26,7 +26,7 @@ public class ArrayDeque<T> {
         size++;
         items[nextLast] = item;
         nextLast = (nextLast + 1) % totalSize;
-        if (size == totalSize) {
+        if (size == totalSize - 1) {
             this.extendDouble();
         }
     }
@@ -40,7 +40,7 @@ public class ArrayDeque<T> {
         int j = 0;
 
         for (int i = (nextFirst + 1) % totalSize; i != nextLast; i = (i + 1) % totalSize) {
-            newItems[j++] = items[i];
+            newItems[++j] = items[i];
         }
 
         nextFirst = 0;
@@ -88,6 +88,9 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
+        if (this.isEmpty()) {
+            return null;
+        }
         if (2 * size < totalSize) {
             this.extendHalf();
         }
@@ -98,10 +101,13 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
+        if (this.isEmpty()) {
+            return null;
+        }
         if (2 * size < totalSize) {
             this.extendHalf();
         }
-        nextLast = (nextLast - 1) % totalSize;
+        nextLast = (nextLast - 1 + totalSize) % totalSize;
         T res = items[nextLast];
         size--;
         return res;
