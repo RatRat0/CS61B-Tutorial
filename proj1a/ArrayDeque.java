@@ -63,7 +63,7 @@ public class ArrayDeque<T> {
         int j = 0;
 
         for (int i = (nextFirst + 1) % totalSize; i != nextLast; i = (i + 1) % totalSize) {
-            newItems[j++] = items[i];
+            newItems[++j] = items[i];
         }
 
         nextFirst = 0;
@@ -91,7 +91,7 @@ public class ArrayDeque<T> {
         if (this.isEmpty()) {
             return null;
         }
-        if (2 * size < totalSize) {
+        if (3 * size < totalSize) {
             this.extendHalf();
         }
         nextFirst = (nextFirst + 1) % totalSize;
@@ -104,7 +104,7 @@ public class ArrayDeque<T> {
         if (this.isEmpty()) {
             return null;
         }
-        if (2 * size < totalSize) {
+        if (3 * size < totalSize) {
             this.extendHalf();
         }
         nextLast = (nextLast - 1 + totalSize) % totalSize;
