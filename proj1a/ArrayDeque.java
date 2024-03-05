@@ -10,7 +10,7 @@ public class ArrayDeque<T> {
         totalSize = 8;
         nextFirst = 4;
         nextLast = 5;
-        items = (T[])new Object[totalSize];
+        items = (T[]) new Object[totalSize];
     }
 
     public void addFirst(T item) {
@@ -35,7 +35,7 @@ public class ArrayDeque<T> {
      * 将数组的总大小扩大一倍
      */
     private void extendDouble() {
-        T[] newItems = (T[])new Object[2 * totalSize];
+        T[] newItems = (T[]) new Object[2 * totalSize];
 
         int j = 0;
 
@@ -54,7 +54,9 @@ public class ArrayDeque<T> {
      * 将数组的总大小减半
      */
     private void extendHalf() {
-        if (totalSize <= 8) return;
+        if (totalSize <= 8) {
+            return;
+        }
 
         T[] newItems = (T[]) new Object[totalSize / 2];
 
