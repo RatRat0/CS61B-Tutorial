@@ -55,4 +55,33 @@ public class ArrayDequeTest {
         assertEquals(19, (int) exp.removeFirst());
     }
 
+    @Test
+    public void d01123Test() {
+        ArrayDeque<Integer> exp = new ArrayDeque<Integer>();
+        exp.addLast(0);
+        exp.removeFirst();
+        exp.addFirst(2);
+        exp.addFirst(3);
+        exp.removeLast();
+        exp.addFirst(5);
+        exp.addFirst(6);
+        exp.addFirst(7);
+        exp.get(3);
+        exp.addFirst(9);
+        exp.removeFirst();
+        exp.removeFirst();
+        exp.get(1);
+        exp.removeLast();
+        exp.get(0);
+        exp.removeLast();
+        exp.get(0);
+        exp.addLast(17);
+        exp.addLast(18);
+        exp.addLast(19);
+        exp.addLast(20);
+        exp.addLast(21);
+        exp.addLast(22);
+        assertEquals(22, (int) exp.removeLast());
+    }
+
 }

@@ -44,7 +44,7 @@ public class ArrayDeque<T> {
         }
 
         nextFirst = 0;
-        nextLast = j;
+        nextLast = j + 1;
 
         totalSize = 2 * totalSize;
         items = newItems;
@@ -67,7 +67,7 @@ public class ArrayDeque<T> {
         }
 
         nextFirst = 0;
-        nextLast = j;
+        nextLast = j + 1;
 
         totalSize = totalSize / 2;
         items = newItems;
