@@ -118,7 +118,6 @@ public class LinkedListDeque<T> implements Deque<T> {
         return cur.val;
     }
 
-    @Override
     public T getRecursive(int index) {
         if (index < 0 || index >= this.size()) {
             return null;
