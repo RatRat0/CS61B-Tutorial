@@ -106,7 +106,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private Set<K> keySetHelper(Node node) {
         if (node == null) {
-            return null;
+            return new HashSet<K>();
         }
         Set<K> keySet = new HashSet<>();
         keySet.add(node.key);
