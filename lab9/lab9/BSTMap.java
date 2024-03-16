@@ -77,6 +77,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             p.left = putHelper(key, value, p.left);
             return p;
         } else {
+            p.value = value;
             return p;
         }
     }
@@ -86,8 +87,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public void put(K key, V value) {
+        if (get(key) == null) {
+            size++;
+        }
         root = putHelper(key, value, root);
-        size++;
     }
 
     /* Returns the number of key-value mappings in this map. */
@@ -121,7 +124,53 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        V res = get(key);
+        if (res == null) {
+            return res;
+        }
+        root = removeHelper(key, root);
+        size--;
+        return res;
+    }
+
+    private Node removeHelper(K key, Node node) {
+        if (node == null) {
+            return node;
+        } else if (key.compareTo(node.key) < 0) {
+            node.left = removeHelper(key, node.left);
+        } else if (key.compareTo(node.key) > 0) {
+            node.right = removeHelper(key, node.right);
+        } else {
+            if (node.left == null) {
+                return node.right;
+            } else if (node.right == null) {
+                return node.left;
+            } else {
+                Node newNode = findMax(node.left);
+                newNode.left = removeMax(node.left);
+                newNode.right = node.right;
+                return newNode;
+            }
+        }
+        return node;
+    }
+
+    private Node findMax(Node node) {
+        if (node.right == null) {
+            return node;
+        }
+        return findMax(node.right);
+    }
+
+    private Node removeMax(Node node) {
+        if (node == null) {
+            return null;
+        }
+        if (node.right == null) {
+            return node.left;
+        }
+        node.right = removeMax(node.right);
+        return node;
     }
 
     /** Removes the key-value entry for the specified key only if it is
@@ -130,7 +179,11 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      **/
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        V res = get(key);
+        if (!res.equals(value)) {
+            return null;
+        }
+        return remove(key);
     }
 
     @Override
