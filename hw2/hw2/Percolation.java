@@ -49,15 +49,18 @@ public class Percolation {
         if (row == 0) {
             UF.union(index, top);
         }
-        if (row == N - 1) {
-            UF.union(index, bottom);
-        }
 
         for (int i = 0; i < 4; i++) {
             int newX = row + dx[i];
             int newY = col + dy[i];
             if (isInOfIndex(newX, newY) && grid[newX][newY]) {
                 UF.union(index, newX * N + newY);
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            if (isFull(N - 1, i)) {
+                UF.union(top, bottom);
             }
         }
     }
@@ -76,7 +79,7 @@ public class Percolation {
 
     public boolean isFull(int row, int col) {
         if (!isInOfIndex(row, col)) {
-            throw new IndexOutOfBoundsException("row:" + row + " col:" + col + " N:" + N);
+            throw new IndexOutOfBoundsException();
         }
         int index = row * N + col;
         return UF.connected(index, top);
@@ -89,5 +92,6 @@ public class Percolation {
     public boolean percolates() {
         return UF.connected(top, bottom);
     }
+
 
 }
