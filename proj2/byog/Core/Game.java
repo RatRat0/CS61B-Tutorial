@@ -39,12 +39,15 @@ public class Game {
         char startMethod = input.charAt(0);
         TETile[][] res = new TETile[WIDTH][HEIGHT];
 
+        /*int seed = Integer.parseInt(input) % 0x7fff;
+
+        createWorld(res, seed);*/
+
         if (startMethod == 'N' || startMethod == 'n') {
-            /*String seedStr = input.substring(1, input.length() - 1);
             if (input.charAt(input.length() - 1) != 's' &&
                     input.charAt(input.length() - 1) != 'S') {
                 return null;
-            }*/
+            }
             StringBuilder sb = new StringBuilder();
             int i = 1;
             for (; i < input.length() && input.charAt(i) != 'S'
