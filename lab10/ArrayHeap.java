@@ -207,13 +207,20 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public void changePriority(T item, double priority) {
+        boolean haveItem = false;
         for (int i = 1; i <= size; i++) {
             T itemComp = contents[i].item();
             if (itemComp.equals(item)) {
                 contents[i] = new Node(item, priority);
                 swim(i);
                 sink(i);
+                haveItem = true;
+                break;
             }
+        }
+
+        if (!haveItem) {
+            throw new IllegalArgumentException("no such item in the heap");
         }
     }
 
