@@ -58,10 +58,8 @@ public class Percolation {
             }
         }
 
-        for (int i = 0; i < N; i++) {
-            if (isFull(N - 1, i)) {
-                UF.union(top, bottom);
-            }
+        if (isFull(N - 1, col)) {
+            UF.union(top, bottom);
         }
     }
 
