@@ -3,8 +3,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestBoard {
-//    @Test
-    /*public void verifyImmutability() {
+    @Test
+    public void verifyImmutability() {
         int r = 2;
         int c = 2;
         int[][] x = new int[r][c];
@@ -23,5 +23,21 @@ public class TestBoard {
 
         x[1][1] = 1000;
         assertEquals("Your Board class is mutable and you should be making a copy of the values in the passed tiles array. Please see the FAQ!", 3, b.tileAt(1, 1));
-    }*/
+    }
+
+    @Test
+    public void testHamming() {
+        int[][] x ={{0, 1, 3}, {4, 2, 5}, {7, 8, 6}};
+        Board b = new Board(x);
+
+        assertEquals(4, b.hamming());
+    }
+
+    @Test
+    public void testManhattan() {
+        int[][] x = {{0, 1, 3}, {4, 2, 5}, {7, 8, 6}};
+        Board b = new Board(x);
+
+        assertEquals(4, b.manhattan());
+    }
 } 

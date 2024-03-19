@@ -8,7 +8,7 @@ import java.util.List;
 public class Solver {
 
     private int moveTimes;
-    private List<SearchNode> path;
+    private List<WorldState> bestPath;
     private MinPQ<SearchNode> PQ;
 
     private class SearchNode implements Comparable<SearchNode> {
@@ -31,7 +31,6 @@ public class Solver {
 
     public Solver(WorldState initial) {
         moveTimes = 0;
-        path = new ArrayList<>();
         PQ = new MinPQ<>();
 
         SearchNode startNode = new SearchNode(initial, null, 0);
@@ -39,10 +38,9 @@ public class Solver {
         while (!PQ.isEmpty()) {
             SearchNode cur = PQ.delMin();
             WorldState curState = cur.state;
-            path.add(cur);
 
             if (curState.isGoal()) {
-                moveTimes = cur.moves;
+                getAnswer(cur);
                 break;
             }
 
@@ -56,19 +54,21 @@ public class Solver {
 
     }
 
+    private void getAnswer(SearchNode goal) {
+        moveTimes = goal.moves;
+
+        bestPath = new ArrayList<>();
+        while (goal != null) {
+            bestPath.addFirst(goal.state);
+            goal = goal.pre;
+        }
+    }
+
     public int moves() {
         return moveTimes;
     }
 
     public Iterable<WorldState> solution() {
-        List<WorldState> bestPath = new ArrayList<>(moveTimes + 1);
-        SearchNode goalNode = path.getLast();
-
-        while (goalNode != null) {
-            bestPath.addFirst(goalNode.state);
-            goalNode = goalNode.pre;
-        }
-
         return bestPath;
     }
 }

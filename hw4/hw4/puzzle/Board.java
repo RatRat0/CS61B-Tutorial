@@ -12,7 +12,9 @@ public class Board implements WorldState {
         N = tiles.length;
         this.tiles = new int[N][N];
         for (int i = 0; i < N; i++) {
-            System.arraycopy(tiles[i], 0, this.tiles[i], 0, N);
+            for (int j = 0; j < N; j++) {
+                this.tiles[i][j] = tiles[i][j];
+            }
         }
     }
 
@@ -72,17 +74,16 @@ public class Board implements WorldState {
     }
 
     public int hamming() {
-        int answer = 1;
         int res = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if (tiles[i][j] == 0) {
                     continue;
                 }
+                int answer = i * N + j + 1;
                 if (tiles[i][j] != answer) {
                     res++;
                 }
-                answer++;
             }
         }
 
@@ -98,10 +99,9 @@ public class Board implements WorldState {
                 if (tiles[i][j] == 0) {
                     continue;
                 }
-                int answerI = (answer - 1) / N;
-                int answerJ = Math.floorMod(answer - 1, N);
-                res += Math.abs(answerI - i) + Math.abs(answerJ - j);
-                answer++;
+                int shouldX = (tiles[i][j] - 1) / N;
+                int shouldY = Math.floorMod(tiles[i][j] - 1, N);
+                res += Math.abs(shouldX - i) + Math.abs(shouldY - j);
             }
         }
 
@@ -153,6 +153,19 @@ public class Board implements WorldState {
         }
         s.append("\n");
         return s.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int res = 0;
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                res = res * (N + 1) + tiles[i][j];
+            }
+        }
+
+        return res;
     }
 
 }
