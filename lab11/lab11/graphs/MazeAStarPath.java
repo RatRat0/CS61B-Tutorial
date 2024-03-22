@@ -1,9 +1,31 @@
 package lab11.graphs;
 
+import java.util.PriorityQueue;
+
 /**
  *  @author Josh Hug
  */
 public class MazeAStarPath extends MazeExplorer {
+    private class SearchNode implements Comparable<SearchNode> {
+        private int value;
+        private int dist;
+        private int h;
+
+        public SearchNode(int value) {
+            this.value = value;
+            dist = distTo[value];
+            h = h(value);
+        }
+
+
+        @Override
+        public int compareTo(SearchNode o) {
+            return this.dist + this.h
+                    - o.dist - o.h;
+
+        }
+    }
+
     private int s;
     private int t;
     private boolean targetFound = false;
@@ -20,7 +42,13 @@ public class MazeAStarPath extends MazeExplorer {
 
     /** Estimate of the distance from v to the target. */
     private int h(int v) {
-        return -1;
+        int curX = maze.toX(v);
+        int curY = maze.toY(v);
+
+        int targetX = maze.toX(t);
+        int targetY = maze.toY(t);
+
+        return Math.abs(curX - targetX) + Math.abs(curY - targetY);
     }
 
     /** Finds vertex estimated to be closest to target. */
@@ -32,6 +60,29 @@ public class MazeAStarPath extends MazeExplorer {
     /** Performs an A star search from vertex s. */
     private void astar(int s) {
         // TODO
+        PriorityQueue<SearchNode> PQ = new PriorityQueue<>();
+        PQ.add(new SearchNode(s));
+
+        while (!targetFound && !PQ.isEmpty()) {
+            SearchNode NodeV = PQ.remove();
+            int v = NodeV.value;
+            announce();
+
+            if (v == t) {
+                targetFound = true;
+                break;
+            }
+
+            for (int w : maze.adj(v)) {
+                if (!marked[w]) {
+                    edgeTo[w] = v;
+                    distTo[w] = distTo[v] + 1;
+                    marked[w] = true;
+                    announce();
+                    PQ.add(new SearchNode(w));
+                }
+            }
+        }
     }
 
     @Override

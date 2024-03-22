@@ -24,7 +24,8 @@ public class Solver {
 
         @Override
         public int compareTo(SearchNode that) {
-            return moves + state.estimatedDistanceToGoal() - that.moves - that.state.estimatedDistanceToGoal();
+            return moves + state.estimatedDistanceToGoal()
+                    - that.moves - that.state.estimatedDistanceToGoal();
         }
 
     }
