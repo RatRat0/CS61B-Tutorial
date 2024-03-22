@@ -31,6 +31,7 @@ public class MazeBreadthFirstPaths extends MazeExplorer {
     private void bfs() {
         Queue<Integer> que = new ArrayDeque<>();
         que.add(s);
+        marked[s] = true;
         announce();
 
         while (!targetFound && !que.isEmpty()) {
