@@ -48,9 +48,6 @@ public class QuickSort {
             Queue<Item> unsorted, Item pivot,
             Queue<Item> less, Queue<Item> equal, Queue<Item> greater) {
         // Your code here!
-        less = new Queue<>();
-        equal = new Queue<>();
-        greater = new Queue<>();
 
         for (Item item : unsorted) {
             if (pivot.compareTo(item) > 0) {
@@ -103,16 +100,24 @@ public class QuickSort {
 
 
         // test partition and cater....
-        System.out.println(que5);
         System.out.println(less);
         System.out.println(equal);
         System.out.println(greater);
+        System.out.println(que5);
         System.out.println(catenate(less, catenate(equal, greater)));
 
         Queue<Double> que6 = quickSort(que5);
 
         System.out.println("---------------------------");
         System.out.println(que5);
-        System.out.println(que6);
+        System.out.println("que6 = " + que6);
+
+        Queue<Double> que1 = new Queue<>();
+
+        for (int i = 0; i < 10; i++) {
+            que1.enqueue(8.8);
+        }
+        Queue<Double> que2 = quickSort(que1);
+        System.out.println(que2);
     }
 }
