@@ -48,12 +48,65 @@ public class QuickSort {
             Queue<Item> unsorted, Item pivot,
             Queue<Item> less, Queue<Item> equal, Queue<Item> greater) {
         // Your code here!
+        for (Item item : unsorted) {
+            if (item.compareTo(pivot) < 0) {
+                less.enqueue(item);
+            } else if (item.compareTo(pivot) > 0) {
+                greater.enqueue(item);
+            } else {
+                equal.enqueue(item);
+            }
+        }
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> quickSort(
             Queue<Item> items) {
         // Your code here!
-        return items;
+        if (items.size() <= 1) {
+            return items;
+        }
+        Item pivot = getRandomItem(items);
+
+        Queue<Item> less = new Queue<>();
+        Queue<Item> equal = new Queue<>();
+        Queue<Item> greater = new Queue<>();
+
+        partition(items, pivot, less, equal, greater);
+        less = quickSort(less);
+        equal = quickSort(equal);
+        greater = quickSort(greater);
+
+        return catenate(less, catenate(equal, greater));
+    }
+
+    public static void main(String[] args) {
+        Queue<Double> que5 = new Queue<>();
+        que5.enqueue(2.8);
+        que5.enqueue(7.3);
+        que5.enqueue(2.2);
+        que5.enqueue(4.6);
+        que5.enqueue(6.6);
+        que5.enqueue(9.9);
+
+        double pivot = 6.6;
+        Queue<Double> less = new Queue<>();
+        Queue<Double> equal = new Queue<>();
+        Queue<Double> greater = new Queue<>();
+        partition(que5, pivot, less, equal, greater);
+
+
+        // test partition and cater....
+        System.out.println(que5);
+        System.out.println(less);
+        System.out.println(equal);
+        System.out.println(greater);
+        System.out.println(catenate(less, catenate(equal, greater)));
+
+        Queue<Double> que6 = quickSort(que5);
+
+        System.out.println("---------------------------");
+        System.out.println(que5);
+        System.out.println(que6);
     }
 }

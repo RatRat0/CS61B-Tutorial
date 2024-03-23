@@ -35,7 +35,15 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
         // Your code here!
-        return null;
+        Queue<Queue<Item>> res = new Queue<>();
+
+        for (Item item : items) {
+            Queue<Item> tmp = new Queue<>();
+            tmp.enqueue(item);
+            res.enqueue(tmp);
+        }
+
+        return res;
     }
 
     /**
@@ -54,13 +62,70 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
         // Your code here!
-        return null;
+        Queue<Item> res = new Queue<>();
+        while (!q1.isEmpty() || !q2.isEmpty()) {
+            Item minItem = getMin(q1, q2);
+            res.enqueue(minItem);
+        }
+
+        return res;
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
         // Your code here!
-        return items;
+        if (items.size() == 1) {
+            return items;
+        }
+
+        Queue<Queue<Item>> tmp = makeSingleItemQueues(items);
+
+        while (tmp.size() > 1) {
+            Queue<Item> q1 = tmp.dequeue();
+            Queue<Item> q2 = tmp.dequeue();
+
+            tmp.enqueue(mergeSortedQueues(q1, q2));
+        }
+
+        return tmp.dequeue();
+    }
+
+    public static void main(String[] args) {
+        Queue<Double> que1 = new Queue<>();
+        Queue<Double> que2 = new Queue<>();
+
+        que1.enqueue(2.2);
+        que1.enqueue(4.5);
+        que1.enqueue(9.9);
+
+        que2.enqueue(1.5);
+        que2.enqueue(3.3);
+        que2.enqueue(4.4);
+
+        //test mergeSortedQueues
+        Queue<Double> que3 = mergeSortedQueues(que1, que2);
+        System.out.println(que3);
+        System.out.println(que2);
+        System.out.println(que1);
+
+        //test makeSingleItemQueues
+        Queue<Queue<Double>> que4 = makeSingleItemQueues(que3);
+        for (Queue<Double> que : que4) {
+            System.out.println(que);
+        }
+
+        Queue<Double> que5 = new Queue<>();
+        que5.enqueue(2.8);
+        que5.enqueue(7.3);
+        que5.enqueue(2.2);
+        que5.enqueue(4.6);
+        que5.enqueue(6.6);
+        que5.enqueue(9.9);
+        Queue<Double> que6 = mergeSort(que5);
+
+        System.out.println(que5);
+        System.out.println(que6);
+
     }
 }
