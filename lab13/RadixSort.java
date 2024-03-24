@@ -16,8 +16,19 @@ public class RadixSort {
      * @return String[] the sorted array
      */
     public static String[] sort(String[] asciis) {
-        // TODO: Implement LSD Sort
-        return null;
+        int maxLength = -1;
+        String[] res = new String[asciis.length];
+        System.arraycopy(asciis, 0, res, 0, asciis.length);
+
+        for (String ascii : asciis) {
+            maxLength = ascii.length() > maxLength ? ascii.length() : maxLength;
+        }
+
+        for (int i = maxLength - 1; i >= 0; i--) {
+            sortHelperLSD(res, i);
+        }
+
+        return res;
     }
 
     /**
@@ -28,7 +39,35 @@ public class RadixSort {
      */
     private static void sortHelperLSD(String[] asciis, int index) {
         // Optional LSD helper method for required LSD radix sort
-        return;
+        int max = 255;
+        int[] counts = new int[max + 1];
+
+        for (String ascii : asciis) {
+            counts[charAt(ascii, index)]++;
+        }
+
+        String[] sorted = new String[asciis.length];
+        int[] starts = new int[max + 1];
+
+        for (int i = 1; i < starts.length; i++) {
+            starts[i] = starts[i - 1] + counts[i - 1];
+        }
+
+        for (int i = 0; i < asciis.length; i++) {
+            int item = (int) charAt(asciis[i], index);
+            int startIndex = starts[item];
+            starts[item]++;
+            sorted[startIndex] = asciis[i];
+        }
+
+        System.arraycopy(sorted, 0, asciis, 0, asciis.length);
+    }
+
+    private static char charAt(String s, int index) {
+        if (index < 0 || index >= s.length()) {
+            return 0;
+        }
+        return s.charAt(index);
     }
 
     /**
@@ -44,5 +83,21 @@ public class RadixSort {
     private static void sortHelperMSD(String[] asciis, int start, int end, int index) {
         // Optional MSD helper method for optional MSD radix sort
         return;
+    }
+
+    public static void main(String[] args) {
+        String[] ss = {"356", "112", "904", "294", "209", "820", "394", "810"};
+        String[] sorted = sort(ss);
+
+        // print ss
+        for (String s : ss) {
+            System.out.print(s + " ");
+        }
+        System.out.println();
+
+        //print sorted
+        for (String s : sorted) {
+            System.out.print(s + " ");
+        }
     }
 }
