@@ -16,6 +16,10 @@ public class RadixSort {
      * @return String[] the sorted array
      */
     public static String[] sort(String[] asciis) {
+        if (asciis == null) {
+            return null;
+        }
+
         int maxLength = -1;
         String[] res = new String[asciis.length];
         System.arraycopy(asciis, 0, res, 0, asciis.length);
@@ -86,8 +90,22 @@ public class RadixSort {
     }
 
     public static void main(String[] args) {
-        String[] ss = {"356", "112", "904", "294", "209", "820", "394", "810"};
+        String[] ss = {"356", "112", "904", "29", "209", "820", "394", "810"};
         String[] sorted = sort(ss);
+
+        // print ss
+        for (String s : ss) {
+            System.out.print(s + " ");
+        }
+        System.out.println();
+
+        //print sorted
+        for (String s : sorted) {
+            System.out.print(s + " ");
+        }
+
+        ss = new String[0];
+        sorted = sort(ss);
 
         // print ss
         for (String s : ss) {
