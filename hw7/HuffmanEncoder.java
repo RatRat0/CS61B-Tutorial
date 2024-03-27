@@ -42,7 +42,7 @@ public class HuffmanEncoder {
         // for each 8 bit symbol: make that sybol to the list of bitsequences.
         for (char inputfileChar : inputFileChars) {
             BitSequence curBitSeq = lookupTable.get(inputfileChar);
-            bitSequenceList.addLast(curBitSeq);
+            bitSequenceList.add(curBitSeq);
         }
 
         // Assemble all bit sequences into one huge bit sequence.
